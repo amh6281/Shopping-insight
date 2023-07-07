@@ -10,13 +10,13 @@ const Form = () => {
     gap: 50px;
   `;
 
-  const Wrapper = styled.div`
+  const FormGroup = styled.div`
     display: flex;
     align-items: center;
     gap: 5px;
   `;
 
-  const Title = styled.h2`
+  const Label = styled.label`
     font-size: 16px;
   `;
 
@@ -36,6 +36,19 @@ const Form = () => {
     border-radius: 0.25em;
   `;
 
+  const CheckboxGroup = styled.div`
+    display: flex;
+    align-items: center;
+  `;
+
+  const CheckboxLabel = styled.label`
+    font-size: 16px;
+  `;
+
+  const CheckboxInput = styled.input`
+    margin-right: 15px;
+  `;
+
   const Button = styled.button`
     padding: 5px 10px;
     cursor: pointer;
@@ -48,31 +61,35 @@ const Form = () => {
 
   return (
     <Container>
-      <Wrapper>
-        <Title>시작일자:</Title>
-        <Input />
-        <Title>종료일자:</Title>
-        <Input />
-        <Title>카테고리:</Title>
-        <Input />
-        <Title>키워드:</Title>
-        <Input />
-      </Wrapper>
-      <Wrapper>
+      <FormGroup>
+        <Label htmlFor="startDate">시작일자:</Label>
+        <Input id="startDate" />
+        <Label htmlFor="endDate">종료일자:</Label>
+        <Input id="endDate" />
+        <Label htmlFor="category">카테고리:</Label>
+        <Input id="category" />
+        <Label htmlFor="keyword">키워드:</Label>
+        <Input id="keyword" />
+      </FormGroup>
+      <FormGroup>
         <Select>
           <option>timeUnit</option>
           <option>일간</option>
           <option>주간</option>
           <option>월간</option>
         </Select>
-        <Select>
-          <option>age</option>
-          <option>10대</option>
-          <option>20대</option>
-          <option>30대</option>
-          <option>40대</option>
-          <option>50대</option>
-        </Select>
+        <CheckboxGroup>
+          <CheckboxLabel htmlFor="age10">10대</CheckboxLabel>
+          <CheckboxInput type="checkbox" id="age10" />
+          <CheckboxLabel htmlFor="age20">20대</CheckboxLabel>
+          <CheckboxInput type="checkbox" id="age20" />
+          <CheckboxLabel htmlFor="age30">30대</CheckboxLabel>
+          <CheckboxInput type="checkbox" id="age30" />
+          <CheckboxLabel htmlFor="age40">40대</CheckboxLabel>
+          <CheckboxInput type="checkbox" id="age40" />
+          <CheckboxLabel htmlFor="age50">50대</CheckboxLabel>
+          <CheckboxInput type="checkbox" id="age50" />
+        </CheckboxGroup>
         <Select>
           <option>gender</option>
           <option>m</option>
@@ -84,7 +101,7 @@ const Form = () => {
           <option>mo</option>
         </Select>
         <Button>조회</Button>
-      </Wrapper>
+      </FormGroup>
     </Container>
   );
 };
