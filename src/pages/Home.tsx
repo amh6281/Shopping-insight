@@ -1,9 +1,11 @@
-import Form from "../components/Form";
+import OptionForm from "../components/OptionForm";
+import RequiredForm from "../components/RequiredForm";
 
 const Home = () => {
   return (
     <div>
-      <Form />
+      <RequiredForm />
+      <OptionForm />
     </div>
   );
 };

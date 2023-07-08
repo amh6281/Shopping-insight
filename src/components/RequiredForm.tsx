@@ -2,7 +2,8 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
-import { categoryList } from "../categoryList";
+import { categoryList } from "../constants/categoryList";
+import { timeUnitList } from "../constants/timeUnitList";
 
 const Container = styled.div`
   width: 70%;
@@ -39,30 +40,7 @@ const Select = styled.select`
   border-radius: 0.25em;
 `;
 
-const CheckboxGroup = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const CheckboxLabel = styled.label`
-  font-size: 16px;
-`;
-
-const CheckboxInput = styled.input`
-  margin-right: 15px;
-`;
-
-const Button = styled.button`
-  padding: 5px 10px;
-  cursor: pointer;
-  background-color: #53c28b;
-  border-radius: 5px;
-  color: white;
-  border: none;
-  font-weight: 500;
-`;
-
-const Form = () => {
+const RequiredForm = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   console.log(startDate.toISOString().slice(0, 10));
@@ -70,6 +48,8 @@ const Form = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   const [keyword, setKeyword] = useState<string>("");
+
+  const [selectedTimeUnit, setSelectedTimeUnit] = useState<string>("");
 
   const handleCategoryChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -79,6 +59,12 @@ const Form = () => {
 
   const handleKeywordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(event.target.value);
+  };
+
+  const handleTimeUnitChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSelectedTimeUnit(event.target.value);
   };
 
   return (
@@ -113,40 +99,18 @@ const Form = () => {
 
         <Label htmlFor="keyword">키워드:</Label>
         <Input id="keyword" onChange={handleKeywordChange} />
-      </FormGroup>
-      <FormGroup>
-        <Select>
-          <option>timeUnit</option>
-          <option>일간</option>
-          <option>주간</option>
-          <option>월간</option>
+
+        <Select value={selectedTimeUnit} onChange={handleTimeUnitChange}>
+          <option value="">timeUnit</option>
+          {timeUnitList.map((timeUnit) => (
+            <option key={timeUnit.unit} value={timeUnit.unit}>
+              {timeUnit.title}
+            </option>
+          ))}
         </Select>
-        <CheckboxGroup>
-          <CheckboxLabel htmlFor="age10">10대</CheckboxLabel>
-          <CheckboxInput type="checkbox" id="age10" />
-          <CheckboxLabel htmlFor="age20">20대</CheckboxLabel>
-          <CheckboxInput type="checkbox" id="age20" />
-          <CheckboxLabel htmlFor="age30">30대</CheckboxLabel>
-          <CheckboxInput type="checkbox" id="age30" />
-          <CheckboxLabel htmlFor="age40">40대</CheckboxLabel>
-          <CheckboxInput type="checkbox" id="age40" />
-          <CheckboxLabel htmlFor="age50">50대</CheckboxLabel>
-          <CheckboxInput type="checkbox" id="age50" />
-        </CheckboxGroup>
-        <Select>
-          <option>gender</option>
-          <option>m</option>
-          <option>f</option>
-        </Select>
-        <Select>
-          <option>device</option>
-          <option>pc</option>
-          <option>mo</option>
-        </Select>
-        <Button>조회</Button>
       </FormGroup>
     </Container>
   );
 };
 
-export default Form;
+export default RequiredForm;
