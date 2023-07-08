@@ -2,6 +2,7 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
+import { categoryList } from "../categoryList";
 
 const Container = styled.div`
   width: 70%;
@@ -66,6 +67,14 @@ const Form = () => {
   const [endDate, setEndDate] = useState(new Date());
   console.log(startDate.toISOString().slice(0, 10));
 
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+
+  const handleCategoryChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSelectedCategory(event.target.value);
+  };
+
   return (
     <Container>
       <FormGroup>
@@ -87,8 +96,15 @@ const Form = () => {
           selectsEnd
           maxDate={new Date()}
         />
-        <Label htmlFor="category">카테고리:</Label>
-        <Input id="category" />
+        <Select value={selectedCategory} onChange={handleCategoryChange}>
+          <option value="">카테고리 선택</option>
+          {categoryList.map((category) => (
+            <option key={category.cat_id} value={category.cat_id}>
+              {category.title}
+            </option>
+          ))}
+        </Select>
+
         <Label htmlFor="keyword">키워드:</Label>
         <Input id="keyword" />
       </FormGroup>
