@@ -53,7 +53,11 @@ const Button = styled.button`
   font-weight: 500;
 `;
 
-const OptionForm = () => {
+interface OptionFormProps {
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const OptionForm: React.FC<OptionFormProps> = ({ setOpen }) => {
   const [selectedDevice, setSelectedDevice] = useState<string>("");
   const [selectedGender, setSelectedGender] = useState<string>("");
   const [selectedAges, setSelectedAges] = useState<string[]>([]);
@@ -76,7 +80,12 @@ const OptionForm = () => {
       setSelectedAges([...selectedAges, age]);
     }
   };
-  console.log(selectedAges);
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setOpen(true);
+  };
+
   return (
     <Container>
       <FormGroup>
@@ -112,7 +121,7 @@ const OptionForm = () => {
             </option>
           ))}
         </Select>
-        <Button>조회</Button>
+        <Button onClick={handleClick}>조회</Button>
       </FormGroup>
     </Container>
   );
