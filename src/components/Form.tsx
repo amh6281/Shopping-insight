@@ -1,71 +1,92 @@
 import styled from "styled-components";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useState } from "react";
+
+const Container = styled.div`
+  width: 70%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+`;
+
+const FormGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`;
+
+const Label = styled.label`
+  font-size: 16px;
+`;
+
+const Input = styled.input`
+  margin-right: 20px;
+  color: black;
+  border-radius: 3px;
+  padding: 10px;
+`;
+
+const Select = styled.select`
+  border: 1px solid #f9f9f9;
+  color: black;
+  border-radius: 3px;
+  padding: 10px;
+  background-color: transparent;
+  border-radius: 0.25em;
+`;
+
+const CheckboxGroup = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const CheckboxLabel = styled.label`
+  font-size: 16px;
+`;
+
+const CheckboxInput = styled.input`
+  margin-right: 15px;
+`;
+
+const Button = styled.button`
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: #53c28b;
+  border-radius: 5px;
+  color: white;
+  border: none;
+  font-weight: 500;
+`;
 
 const Form = () => {
-  const Container = styled.div`
-    width: 70%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 50px;
-  `;
-
-  const FormGroup = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  `;
-
-  const Label = styled.label`
-    font-size: 16px;
-  `;
-
-  const Input = styled.input`
-    margin-right: 20px;
-    color: black;
-    border-radius: 3px;
-    padding: 10px;
-  `;
-
-  const Select = styled.select`
-    border: 1px solid #f9f9f9;
-    color: black;
-    border-radius: 3px;
-    padding: 10px;
-    background-color: transparent;
-    border-radius: 0.25em;
-  `;
-
-  const CheckboxGroup = styled.div`
-    display: flex;
-    align-items: center;
-  `;
-
-  const CheckboxLabel = styled.label`
-    font-size: 16px;
-  `;
-
-  const CheckboxInput = styled.input`
-    margin-right: 15px;
-  `;
-
-  const Button = styled.button`
-    padding: 5px 10px;
-    cursor: pointer;
-    background-color: #53c28b;
-    border-radius: 5px;
-    color: white;
-    border: none;
-    font-weight: 500;
-  `;
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  console.log(startDate.toISOString().slice(0, 10));
 
   return (
     <Container>
       <FormGroup>
         <Label htmlFor="startDate">시작일자:</Label>
-        <Input id="startDate" />
+        <DatePicker
+          dateFormat="yyyy-MM-dd"
+          selected={startDate}
+          onChange={(date: Date) => setStartDate(date)}
+          selectsStart
+          startDate={startDate}
+          endDate={endDate}
+          minDate={new Date("2017-08-01")}
+        />
         <Label htmlFor="endDate">종료일자:</Label>
-        <Input id="endDate" />
+        <DatePicker
+          dateFormat="yyyy-MM-dd"
+          selected={endDate}
+          onChange={(date: Date) => setEndDate(date)}
+          selectsEnd
+          maxDate={new Date()}
+        />
         <Label htmlFor="category">카테고리:</Label>
         <Input id="category" />
         <Label htmlFor="keyword">키워드:</Label>
