@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import { useState } from "react";
+import { deviceList } from "../constants/deviceList";
+import { genderList } from "../constants/genderList";
+import { ageList } from "../constants/ageList";
+import React from "react";
 
 const Container = styled.div`
   width: 70%;
@@ -49,30 +54,63 @@ const Button = styled.button`
 `;
 
 const OptionForm = () => {
+  const [selectedDevice, setSelectedDevice] = useState<string>("");
+  const [selectedGender, setSelectedGender] = useState<string>("");
+  const [selectedAges, setSelectedAges] = useState<string[]>([]);
+
+  const handleDeviceChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedDevice(event.target.value);
+  };
+
+  const handleGenderChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedGender(event.target.value);
+  };
+
+  const handleAgeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const age = event.target.value;
+    if (selectedAges.includes(age)) {
+      setSelectedAges(
+        selectedAges.filter((selectedAge) => selectedAge !== age)
+      );
+    } else {
+      setSelectedAges([...selectedAges, age]);
+    }
+  };
+  console.log(selectedAges);
   return (
     <Container>
       <FormGroup>
         <CheckboxGroup>
-          <CheckboxLabel htmlFor="age10">10대</CheckboxLabel>
-          <CheckboxInput type="checkbox" id="age10" />
-          <CheckboxLabel htmlFor="age20">20대</CheckboxLabel>
-          <CheckboxInput type="checkbox" id="age20" />
-          <CheckboxLabel htmlFor="age30">30대</CheckboxLabel>
-          <CheckboxInput type="checkbox" id="age30" />
-          <CheckboxLabel htmlFor="age40">40대</CheckboxLabel>
-          <CheckboxInput type="checkbox" id="age40" />
-          <CheckboxLabel htmlFor="age50">50대</CheckboxLabel>
-          <CheckboxInput type="checkbox" id="age50" />
+          {ageList.map((age) => (
+            <React.Fragment key={age.age}>
+              <CheckboxLabel
+                htmlFor={`age${age.age}`}
+              >{`${age.age}대`}</CheckboxLabel>
+              <CheckboxInput
+                type="checkbox"
+                id={`age${age}`}
+                value={age.age}
+                checked={selectedAges.includes(age.age)}
+                onChange={handleAgeChange}
+              />
+            </React.Fragment>
+          ))}
         </CheckboxGroup>
-        <Select>
-          <option>gender</option>
-          <option>m</option>
-          <option>f</option>
+        <Select value={selectedGender} onChange={handleGenderChange}>
+          <option value="">gender</option>
+          {genderList.map((gender) => (
+            <option key={gender.gender} value={gender.gender}>
+              {gender.title}
+            </option>
+          ))}
         </Select>
-        <Select>
-          <option>device</option>
-          <option>pc</option>
-          <option>mo</option>
+        <Select value={selectedDevice} onChange={handleDeviceChange}>
+          <option value="">Device</option>
+          {deviceList.map((device) => (
+            <option key={device.device} value={device.device}>
+              {device.title}
+            </option>
+          ))}
         </Select>
         <Button>조회</Button>
       </FormGroup>
