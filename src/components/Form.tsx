@@ -69,10 +69,16 @@ const Form = () => {
 
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
+  const [keyword, setKeyword] = useState<string>("");
+
   const handleCategoryChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setSelectedCategory(event.target.value);
+  };
+
+  const handleKeywordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(event.target.value);
   };
 
   return (
@@ -106,7 +112,7 @@ const Form = () => {
         </Select>
 
         <Label htmlFor="keyword">키워드:</Label>
-        <Input id="keyword" />
+        <Input id="keyword" onChange={handleKeywordChange} />
       </FormGroup>
       <FormGroup>
         <Select>
