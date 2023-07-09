@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
 import { categoryList } from "../constants/categoryList";
 import { timeUnitList } from "../constants/timeUnitList";
+import axios from "axios";
 
 const Container = styled.div`
   width: 70%;
@@ -50,6 +51,7 @@ const RequiredForm = () => {
   const [keyword, setKeyword] = useState<string>("");
 
   const [selectedTimeUnit, setSelectedTimeUnit] = useState<string>("");
+  const [res, setRes] = useState<[]>([]);
 
   const handleCategoryChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -67,6 +69,27 @@ const RequiredForm = () => {
     setSelectedTimeUnit(event.target.value);
   };
 
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post("http://localhost:8800/api/shopping", {
+        startDate: startDate.toISOString().slice(0, 10),
+        endDate: endDate.toISOString().slice(0, 10),
+        category: selectedCategory,
+        timeUnit: selectedTimeUnit,
+        keyword: keyword,
+      });
+      setRes(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log(selectedCategory);
+  console.log(selectedTimeUnit);
+
+  console.log(res);
   return (
     <Container>
       <FormGroup>
@@ -109,6 +132,7 @@ const RequiredForm = () => {
           ))}
         </Select>
       </FormGroup>
+      <button onClick={handleClick}>hh</button>
     </Container>
   );
 };
