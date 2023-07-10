@@ -1,24 +1,20 @@
 import Chart from "../components/Chart";
 import OptionForm from "../components/OptionForm";
 import RequiredForm from "../components/RequiredForm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-
-export type ChartType = {
-  startDate: string;
-  endDate: string;
-  timeUnit: string;
-  category: string;
-  keyword: string;
-  device: string;
-  gender: string;
-  ages: string[];
-};
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "../redux/store";
+import { selectChartData } from "../redux/chartDataRedux";
+import { getChartData } from "../redux/apiCalls";
+import { ChartDataType } from "../constants/chartDataType";
 
 const Home = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const fetchedChartData = useSelector(selectChartData);
+
   const [open, setOpen] = useState<boolean>(false);
 
-  const [chartData, setChartData] = useState<ChartType[]>([]);
   const [requiredFormData, setRequiredFormData] = useState<any>({});
   const [optionFormData, setOptionFormData] = useState<any>({});
   const [selectedAges, setSelectedAges] = useState<string[]>([]);
@@ -46,7 +42,7 @@ const Home = () => {
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8800/api/shopping", {
+      const params = {
         startDate: requiredFormData.startDate,
         endDate: requiredFormData.endDate,
         category: requiredFormData.category,
@@ -54,15 +50,15 @@ const Home = () => {
         timeUnit: requiredFormData.timeUnit,
         device: optionFormData.device,
         gender: optionFormData.gender,
-        age: selectedAges,
-      });
-      setChartData(response.data);
+        ages: selectedAges,
+      };
+      dispatch(getChartData(params));
       setOpen(true);
     } catch (err) {
       console.log(err);
     }
   };
-  console.log(chartData);
+
   return (
     <div>
       <RequiredForm handleChange={handleRequiredFormChange} />
@@ -72,7 +68,7 @@ const Home = () => {
         setSelectedAges={setSelectedAges}
       />
       <button onClick={handleClick}>조회</button>
-      {open && <Chart chartData={chartData as ChartType[]} />}
+      {open && <Chart chartData={fetchedChartData as ChartDataType[]} />}
     </div>
   );
 };
