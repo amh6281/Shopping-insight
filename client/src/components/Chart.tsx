@@ -8,6 +8,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { styled } from "styled-components";
+import { ChartType } from "../pages/Home";
 
 const data = [
   {
@@ -51,7 +52,11 @@ const Container = styled.div`
   margin-top: 50px;
 `;
 
-const Chart = () => {
+type ChartProps = {
+  chartData: ChartType[];
+};
+
+const Chart = ({ chartData }: ChartProps) => {
   return (
     <Container>
       <AreaChart

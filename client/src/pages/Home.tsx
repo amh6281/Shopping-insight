@@ -4,10 +4,21 @@ import RequiredForm from "../components/RequiredForm";
 import { useState } from "react";
 import axios from "axios";
 
+export type ChartType = {
+  startDate: string;
+  endDate: string;
+  timeUnit: string;
+  category: string;
+  keyword: string;
+  device: string;
+  gender: string;
+  ages: string[];
+};
+
 const Home = () => {
   const [open, setOpen] = useState<boolean>(false);
 
-  const [chartData, setChartData] = useState<any[]>([]);
+  const [chartData, setChartData] = useState<ChartType[]>([]);
   const [requiredFormData, setRequiredFormData] = useState<any>({});
   const [optionFormData, setOptionFormData] = useState<any>({});
   const [selectedAges, setSelectedAges] = useState<string[]>([]);
@@ -46,6 +57,7 @@ const Home = () => {
         age: selectedAges,
       });
       setChartData(response.data);
+      setOpen(true);
     } catch (err) {
       console.log(err);
     }
@@ -60,7 +72,7 @@ const Home = () => {
         setSelectedAges={setSelectedAges}
       />
       <button onClick={handleClick}>조회</button>
-      {open && <Chart />}
+      {open && <Chart chartData={chartData as ChartType[]} />}
     </div>
   );
 };
