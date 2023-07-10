@@ -41,55 +41,48 @@ const Select = styled.select`
   border-radius: 0.25em;
 `;
 
-const RequiredForm = () => {
+const RequiredForm = ({ handleChange }: any) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  console.log(startDate.toISOString().slice(0, 10));
 
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-
-  const [keyword, setKeyword] = useState<string>("");
-
-  const [selectedTimeUnit, setSelectedTimeUnit] = useState<string>("");
   const [res, setRes] = useState<[]>([]);
 
   const handleCategoryChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setSelectedCategory(event.target.value);
+    const { name, value } = event.target;
+    handleChange({ target: { name: "category", value } });
   };
 
   const handleKeywordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setKeyword(event.target.value);
+    const { name, value } = event.target;
+    handleChange({ target: { name: "keyword", value } });
   };
 
   const handleTimeUnitChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setSelectedTimeUnit(event.target.value);
+    const { name, value } = event.target;
+    handleChange({ target: { name: "timeUnit", value } });
   };
 
-  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  // const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  //   e.preventDefault();
 
-    try {
-      const response = await axios.post("http://localhost:8800/api/shopping", {
-        startDate: startDate.toISOString().slice(0, 10),
-        endDate: endDate.toISOString().slice(0, 10),
-        category: selectedCategory,
-        timeUnit: selectedTimeUnit,
-        keyword: keyword,
-      });
-      setRes(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //   try {
+  //     const response = await axios.post("http://localhost:8800/api/shopping", {
+  //       startDate: startDate.toISOString().slice(0, 10),
+  //       endDate: endDate.toISOString().slice(0, 10),
+  //       category: selectedCategory,
+  //       timeUnit: selectedTimeUnit,
+  //       keyword: keyword,
+  //     });
+  //     setRes(response.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-  console.log(selectedCategory);
-  console.log(selectedTimeUnit);
-
-  console.log(res);
   return (
     <Container>
       <FormGroup>
@@ -97,7 +90,17 @@ const RequiredForm = () => {
         <DatePicker
           dateFormat="yyyy-MM-dd"
           selected={startDate}
-          onChange={(date: Date) => setStartDate(date)}
+          onChange={(date: Date) =>
+            handleChange(
+              {
+                target: {
+                  name: "startDate",
+                  value: date.toISOString().slice(0, 10),
+                },
+              },
+              setStartDate(date)
+            )
+          }
           selectsStart
           startDate={startDate}
           endDate={endDate}
@@ -107,11 +110,22 @@ const RequiredForm = () => {
         <DatePicker
           dateFormat="yyyy-MM-dd"
           selected={endDate}
-          onChange={(date: Date) => setEndDate(date)}
+          onChange={(date: Date) =>
+            handleChange(
+              {
+                target: {
+                  name: "endDate",
+                  value: date.toISOString().slice(0, 10),
+                },
+              },
+              setEndDate(date)
+            )
+          }
           selectsEnd
           maxDate={new Date()}
         />
-        <Select value={selectedCategory} onChange={handleCategoryChange}>
+
+        <Select onChange={handleCategoryChange}>
           <option value="">카테고리 선택</option>
           {categoryList.map((category) => (
             <option key={category.cat_id} value={category.cat_id}>
@@ -123,7 +137,7 @@ const RequiredForm = () => {
         <Label htmlFor="keyword">키워드:</Label>
         <Input id="keyword" onChange={handleKeywordChange} />
 
-        <Select value={selectedTimeUnit} onChange={handleTimeUnitChange}>
+        <Select onChange={handleTimeUnitChange}>
           <option value="">timeUnit</option>
           {timeUnitList.map((timeUnit) => (
             <option key={timeUnit.unit} value={timeUnit.unit}>
@@ -132,7 +146,6 @@ const RequiredForm = () => {
           ))}
         </Select>
       </FormGroup>
-      <button onClick={handleClick}>hh</button>
     </Container>
   );
 };

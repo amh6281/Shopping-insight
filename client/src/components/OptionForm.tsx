@@ -53,37 +53,29 @@ const Button = styled.button`
   font-weight: 500;
 `;
 
-interface OptionFormProps {
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const OptionForm: React.FC<OptionFormProps> = ({ setOpen }) => {
+const OptionForm = ({ handleChange, selectedAges, setSelectedAges }: any) => {
   const [selectedDevice, setSelectedDevice] = useState<string>("");
   const [selectedGender, setSelectedGender] = useState<string>("");
-  const [selectedAges, setSelectedAges] = useState<string[]>([]);
 
   const handleDeviceChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedDevice(event.target.value);
+    const { name, value } = event.target;
+    handleChange({ target: { name: "device", value } });
   };
 
   const handleGenderChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedGender(event.target.value);
+    const { name, value } = event.target;
+    handleChange({ target: { name: "gender", value } });
   };
 
   const handleAgeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const age = event.target.value;
     if (selectedAges.includes(age)) {
       setSelectedAges(
-        selectedAges.filter((selectedAge) => selectedAge !== age)
+        selectedAges.filter((selectedAge: string) => selectedAge !== age)
       );
     } else {
       setSelectedAges([...selectedAges, age]);
     }
-  };
-
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setOpen(true);
   };
 
   return (
@@ -105,6 +97,7 @@ const OptionForm: React.FC<OptionFormProps> = ({ setOpen }) => {
             </React.Fragment>
           ))}
         </CheckboxGroup>
+
         <Select value={selectedGender} onChange={handleGenderChange}>
           <option value="">gender</option>
           {genderList.map((gender) => (
@@ -113,6 +106,7 @@ const OptionForm: React.FC<OptionFormProps> = ({ setOpen }) => {
             </option>
           ))}
         </Select>
+
         <Select value={selectedDevice} onChange={handleDeviceChange}>
           <option value="">Device</option>
           {deviceList.map((device) => (
@@ -121,7 +115,6 @@ const OptionForm: React.FC<OptionFormProps> = ({ setOpen }) => {
             </option>
           ))}
         </Select>
-        <Button onClick={handleClick}>조회</Button>
       </FormGroup>
     </Container>
   );
