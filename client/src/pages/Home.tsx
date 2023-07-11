@@ -13,8 +13,6 @@ const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
   const fetchedChartData = useSelector(selectChartData);
 
-  const [open, setOpen] = useState<boolean>(false);
-
   const [requiredFormData, setRequiredFormData] = useState<any>({});
   const [optionFormData, setOptionFormData] = useState<any>({});
   const [selectedAges, setSelectedAges] = useState<string[]>([]);
@@ -53,7 +51,6 @@ const Home = () => {
         ages: selectedAges,
       };
       dispatch(getChartData(params));
-      setOpen(true);
     } catch (err) {
       console.log(err);
     }
@@ -68,7 +65,7 @@ const Home = () => {
         setSelectedAges={setSelectedAges}
       />
       <button onClick={handleClick}>조회</button>
-      {open && <Chart chartData={fetchedChartData as ChartDataType[]} />}
+      {fetchedChartData && <Chart />}
     </div>
   );
 };
