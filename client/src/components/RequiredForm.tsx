@@ -1,10 +1,14 @@
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { categoryList } from "../constants/categoryList";
 import { timeUnitList } from "../constants/timeUnitList";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { ChartDataType } from "../constants/chartDataType";
+import { selectFormData } from "../redux/formRedux";
 
 const Container = styled.div`
   width: 70%;
@@ -44,8 +48,20 @@ const Select = styled.select`
 const RequiredForm = ({ handleChange }: any) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [category, setCategory] = useState("");
+  const [keyword, setKeyword] = useState("");
+  const [timeUnit, setTimeUnit] = useState("");
 
-  const [res, setRes] = useState<[]>([]);
+  const formData = useSelector(selectFormData);
+
+  useEffect(() => {
+    // 초기 상태 설정
+    setStartDate(new Date(formData.startDate));
+    setEndDate(new Date(formData.endDate));
+    setCategory(formData.category);
+    setKeyword(formData.keyword);
+    setTimeUnit(formData.timeUnit);
+  }, [formData]);
 
   const handleCategoryChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -65,23 +81,6 @@ const RequiredForm = ({ handleChange }: any) => {
     const { name, value } = event.target;
     handleChange({ target: { name: "timeUnit", value } });
   };
-
-  // const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const response = await axios.post("http://localhost:8800/api/shopping", {
-  //       startDate: startDate.toISOString().slice(0, 10),
-  //       endDate: endDate.toISOString().slice(0, 10),
-  //       category: selectedCategory,
-  //       timeUnit: selectedTimeUnit,
-  //       keyword: keyword,
-  //     });
-  //     setRes(response.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   return (
     <Container>
@@ -125,7 +124,7 @@ const RequiredForm = ({ handleChange }: any) => {
           maxDate={new Date()}
         />
 
-        <Select onChange={handleCategoryChange}>
+        <Select onChange={handleCategoryChange} value={category}>
           <option value="">카테고리 선택</option>
           {categoryList.map((category) => (
             <option key={category.cat_id} value={category.cat_id}>
@@ -135,10 +134,14 @@ const RequiredForm = ({ handleChange }: any) => {
         </Select>
 
         <Label htmlFor="keyword">키워드:</Label>
-        <Input id="keyword" onChange={handleKeywordChange} />
+        <Input
+          id="keyword"
+          onChange={handleKeywordChange}
+          placeholder={keyword ? keyword : "키워드"}
+        />
 
-        <Select onChange={handleTimeUnitChange}>
-          <option value="">timeUnit</option>
+        <Select onChange={handleTimeUnitChange} value={timeUnit}>
+          <option value="">카테고리 선택</option>
           {timeUnitList.map((timeUnit) => (
             <option key={timeUnit.unit} value={timeUnit.unit}>
               {timeUnit.title}

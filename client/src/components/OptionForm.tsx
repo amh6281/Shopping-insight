@@ -1,9 +1,11 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { deviceList } from "../constants/deviceList";
 import { genderList } from "../constants/genderList";
 import { ageList } from "../constants/ageList";
 import React from "react";
+import { selectFormData } from "../redux/formRedux";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   width: 70%;
@@ -43,19 +45,18 @@ const CheckboxInput = styled.input`
   margin-right: 15px;
 `;
 
-const Button = styled.button`
-  padding: 5px 10px;
-  cursor: pointer;
-  background-color: #53c28b;
-  border-radius: 5px;
-  color: white;
-  border: none;
-  font-weight: 500;
-`;
-
 const OptionForm = ({ handleChange, selectedAges, setSelectedAges }: any) => {
   const [selectedDevice, setSelectedDevice] = useState<string>("");
   const [selectedGender, setSelectedGender] = useState<string>("");
+
+  const formData = useSelector(selectFormData);
+
+  useEffect(() => {
+    // 초기 상태 설정
+    setSelectedDevice(formData.device);
+    setSelectedGender(formData.gender);
+    setSelectedAges(formData.ages);
+  }, [formData]);
 
   const handleDeviceChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
@@ -98,8 +99,8 @@ const OptionForm = ({ handleChange, selectedAges, setSelectedAges }: any) => {
           ))}
         </CheckboxGroup>
 
-        <Select value={selectedGender} onChange={handleGenderChange}>
-          <option value="">gender</option>
+        <Select onChange={handleGenderChange} value={selectedGender}>
+          <option value="">성별</option>
           {genderList.map((gender) => (
             <option key={gender.gender} value={gender.gender}>
               {gender.title}
@@ -107,8 +108,8 @@ const OptionForm = ({ handleChange, selectedAges, setSelectedAges }: any) => {
           ))}
         </Select>
 
-        <Select value={selectedDevice} onChange={handleDeviceChange}>
-          <option value="">Device</option>
+        <Select onChange={handleDeviceChange} value={selectedDevice}>
+          <option value="">device</option>
           {deviceList.map((device) => (
             <option key={device.device} value={device.device}>
               {device.title}
