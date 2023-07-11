@@ -51,6 +51,7 @@ const Home = () => {
         ages: selectedAges,
       };
       dispatch(getChartData(params));
+      console.log(params);
     } catch (err) {
       console.log(err);
     }
@@ -60,7 +61,7 @@ const Home = () => {
     <div>
       <RequiredForm handleChange={handleRequiredFormChange} />
       <OptionForm
-        handleChange={handleRequiredFormChange}
+        handleChange={handleOptionFormChange}
         selectedAges={selectedAges}
         setSelectedAges={setSelectedAges}
       />

@@ -13,42 +13,6 @@ import { useSelector } from "react-redux";
 import { selectChartData } from "../redux/chartDataRedux";
 import { RootState } from "../redux/store";
 
-// const data = [
-//   {
-//     name: "Page A",
-//     uv: 4000,
-//     pv: 2400,
-//     amt: 2400,
-//      10대: 3.66
-//   },
-//   {
-//     name: "Page B",
-//     uv: 3000,
-//     pv: 2200,
-//     amt: 2200,
-//   },
-
-//   {
-//     name: "Page C",
-//     uv: 2000,
-//     pv: 2100,
-//     amt: 2100,
-//   },
-
-//   {
-//     name: "Page D",
-//     uv: 4500,
-//     pv: 2500,
-//     amt: 2500,
-//   },
-//   {
-//     name: "Page E",
-//     uv: 3200,
-//     pv: 2300,
-//     amt: 2300,
-//   },
-// ];
-
 const Container = styled.div`
   display: flex;
   align-items: center;

@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import chartDataReducer from "./chartDataRedux";
+import formReducer from "./formRedux";
 import {
   persistStore,
   persistReducer,
@@ -20,6 +21,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   chartData: chartDataReducer,
+  formData: formReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
