@@ -56,18 +56,20 @@ const RequiredForm = ({ handleChange }: any) => {
 
   useEffect(() => {
     // 초기 상태 설정
-    setStartDate(new Date(formData.startDate));
-    setEndDate(new Date(formData.endDate));
-    setCategory(formData.category);
-    setKeyword(formData.keyword);
-    setTimeUnit(formData.timeUnit);
+    if (formData.startDate) {
+      setStartDate(new Date(formData.startDate));
+      setEndDate(new Date(formData.endDate));
+      setCategory(formData.category);
+      setKeyword(formData.keyword);
+      setTimeUnit(formData.timeUnit);
+    }
   }, [formData]);
 
   const handleCategoryChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const { name, value } = event.target;
-    handleChange({ target: { name: "category", value } });
+    handleChange({ target: { name: "category", value } }, setCategory(value));
   };
 
   const handleKeywordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,7 +81,7 @@ const RequiredForm = ({ handleChange }: any) => {
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const { name, value } = event.target;
-    handleChange({ target: { name: "timeUnit", value } });
+    handleChange({ target: { name: "timeUnit", value } }, setTimeUnit(value));
   };
 
   return (

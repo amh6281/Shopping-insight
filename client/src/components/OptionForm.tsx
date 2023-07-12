@@ -53,19 +53,27 @@ const OptionForm = ({ handleChange, selectedAges, setSelectedAges }: any) => {
 
   useEffect(() => {
     // 초기 상태 설정
-    setSelectedDevice(formData.device);
-    setSelectedGender(formData.gender);
-    setSelectedAges(formData.ages);
+    if (formData.startDate) {
+      setSelectedDevice(formData.device);
+      setSelectedGender(formData.gender);
+      setSelectedAges(formData.ages);
+    }
   }, [formData]);
 
   const handleDeviceChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
-    handleChange({ target: { name: "device", value } });
+    handleChange(
+      { target: { name: "device", value } },
+      setSelectedDevice(value)
+    );
   };
 
   const handleGenderChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
-    handleChange({ target: { name: "gender", value } });
+    handleChange(
+      { target: { name: "gender", value } },
+      setSelectedGender(value)
+    );
   };
 
   const handleAgeChange = (event: React.ChangeEvent<HTMLInputElement>) => {

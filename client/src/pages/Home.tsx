@@ -5,9 +5,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
-import { selectChartData } from "../redux/chartDataRedux";
+import { resetChartData, selectChartData } from "../redux/chartDataRedux";
 import { getChartData } from "../redux/apiCalls";
 import { ChartDataType } from "../constants/chartDataType";
+import { resetFormData } from "../redux/formRedux";
 
 const Home = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -57,6 +58,14 @@ const Home = () => {
     }
   };
 
+  const handleChartReset = () => {
+    dispatch(resetChartData());
+  };
+
+  const handleFormReset = () => {
+    dispatch(resetFormData());
+  };
+
   return (
     <div>
       <RequiredForm handleChange={handleRequiredFormChange} />
@@ -66,6 +75,8 @@ const Home = () => {
         setSelectedAges={setSelectedAges}
       />
       <button onClick={handleClick}>조회</button>
+      <button onClick={handleChartReset}>초기화</button>
+      <button onClick={handleFormReset}>초기화</button>
       {fetchedChartData && <Chart />}
     </div>
   );
