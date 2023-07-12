@@ -22,6 +22,8 @@ const FormGroup = styled.div`
   gap: 5px;
 `;
 
+const Title = styled.h2``;
+
 const Label = styled.label`
   font-size: 16px;
 `;
@@ -84,6 +86,7 @@ const RequiredForm = ({ handleChange }: any) => {
   return (
     <Container>
       <FormGroup>
+        <Title>필수 입력</Title>
         <Label htmlFor="startDate">시작일자:</Label>
         <DatePicker
           dateFormat="yyyy-MM-dd"

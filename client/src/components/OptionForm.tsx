@@ -11,8 +11,8 @@ const Container = styled.div`
   width: 70%;
   margin: 0 auto;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: space-around;
   gap: 50px;
   margin-top: 30px;
 `;
@@ -22,6 +22,8 @@ const FormGroup = styled.div`
   align-items: center;
   gap: 25px;
 `;
+
+const Title = styled.h2``;
 
 const Select = styled.select`
   border: 1px solid #f9f9f9;
@@ -90,6 +92,7 @@ const OptionForm = ({ handleChange, selectedAges, setSelectedAges }: any) => {
   return (
     <Container>
       <FormGroup>
+        <Title>옵션 입력</Title>
         <CheckboxGroup>
           {ageList.map((age) => (
             <React.Fragment key={age.age}>
