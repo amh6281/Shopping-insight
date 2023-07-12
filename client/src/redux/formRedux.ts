@@ -17,10 +17,10 @@ export const formSlice = createSlice({
   name: "form",
   initialState,
   reducers: {
-    fetchSuccess: (state, action: PayloadAction<ChartDataType>) => {
+    fetchSuccess: (_state, action: PayloadAction<ChartDataType>) => {
       return action.payload;
     },
-    resetFormData: (state) => {
+    resetFormData: (_state) => {
       return initialState; // 상태를 초기화합니다.
     },
   },

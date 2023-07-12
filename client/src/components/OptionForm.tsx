@@ -61,7 +61,7 @@ const OptionForm = ({ handleChange, selectedAges, setSelectedAges }: any) => {
   }, [formData]);
 
   const handleDeviceChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = event.target;
+    const { value } = event.target;
     handleChange(
       { target: { name: "device", value } },
       setSelectedDevice(value)
@@ -69,7 +69,7 @@ const OptionForm = ({ handleChange, selectedAges, setSelectedAges }: any) => {
   };
 
   const handleGenderChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = event.target;
+    const { value } = event.target;
     handleChange(
       { target: { name: "gender", value } },
       setSelectedGender(value)

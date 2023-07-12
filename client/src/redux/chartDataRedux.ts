@@ -1,15 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { RootState } from "./store";
-import { ChartDataType, Result } from "../constants/chartDataType";
+import { InsightResponse } from "../constants/chartDataType";
 import { getChartData } from "./apiCalls";
-
-interface ChartDataState {
-  startDate: string;
-  endDate: string;
-  timeUnit: string;
-  results: Result[];
-}
 
 const chartDataSlice = createSlice({
   name: "chartData",
@@ -18,7 +11,7 @@ const chartDataSlice = createSlice({
     endDate: "",
     timeUnit: "",
     results: [],
-  } as ChartDataState,
+  } as InsightResponse,
   reducers: {
     resetChartData: (state) => {
       state.startDate = ""; // startDate 초기화
@@ -29,7 +22,7 @@ const chartDataSlice = createSlice({
   },
   // createAsyncThunk를 사용하여 정의된 액션함수를 사용하기 위한 extraReducers
   extraReducers: (builder) => {
-    builder.addCase(getChartData.fulfilled, (state, action) => {
+    builder.addCase(getChartData.fulfilled, (_state, action) => {
       return action.payload;
     });
   },

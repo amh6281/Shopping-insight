@@ -4,10 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useState, useEffect } from "react";
 import { categoryList } from "../constants/categoryList";
 import { timeUnitList } from "../constants/timeUnitList";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { ChartDataType } from "../constants/chartDataType";
+import { useSelector } from "react-redux";
 import { selectFormData } from "../redux/formRedux";
 
 const Container = styled.div`
@@ -68,19 +65,19 @@ const RequiredForm = ({ handleChange }: any) => {
   const handleCategoryChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    const { name, value } = event.target;
+    const { value } = event.target;
     handleChange({ target: { name: "category", value } }, setCategory(value));
   };
 
   const handleKeywordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+    const { value } = event.target;
     handleChange({ target: { name: "keyword", value } });
   };
 
   const handleTimeUnitChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    const { name, value } = event.target;
+    const { value } = event.target;
     handleChange({ target: { name: "timeUnit", value } }, setTimeUnit(value));
   };
 
