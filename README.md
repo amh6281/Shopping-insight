@@ -53,8 +53,3 @@
 4. **프로젝트 시작 :** `yarn run dev`
   <br />
   <br />
-  
-## 선택 구현
-* Redux-Persist를 활용하여 새로고침 시 입력값 및 Chart data 유지
-  <br />
-  <br />
